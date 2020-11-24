@@ -1,5 +1,3 @@
-interface Contract {
+interface LockdropContract {
   address: string;
-  deployedFor: string;
-  deployedTime: number;
 }

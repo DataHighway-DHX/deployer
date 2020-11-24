@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Query, Route } from "tsoa";
 import { LockdropEthRepo } from "../repositories/lockdropEthereum";
 import { LockdropStoreRepo } from "../repositories/lockdropStore";
+import { ApiError } from "../apiError";
 
 @Route("lockdrop")
 export class LockdropController extends Controller {
@@ -8,19 +9,28 @@ export class LockdropController extends Controller {
   public lockdropEthRepo: LockdropEthRepo = new LockdropEthRepo();
 
   /*
-  Gets lockdrop contract address for passed ethereum account.
-  If contract doesn't exists or expired, it will be deployed.
+  Gets lockdrop contract address.
    */
   @Get("get")
-  public async get(@Query() ethereumAddress: string) {
-    await this.lockdropRepo.put({
-      deployedFor: ethereumAddress,
-      address: "t",
-      deployedTime: 0,
-    });
-    await this.lockdropRepo.getForAddress(ethereumAddress);
-    return null;
-    let address = await this.lockdropRepo.deploy();
-    return address;
+  public async get() {
+    let contract = await this.lockdropRepo.get();
+    if (!contract) {
+      throw new ApiError(
+        "ContractNotDeployed",
+        404,
+        "Contract not deployed. Wait"
+      );
+    }
+
+    let endTime = await this.lockdropEthRepo.getEndTime(contract.address);
+    if (endTime < Date.now() / 1000) {
+      return new ApiError(
+        "ContractExpired",
+        500,
+        "Contract expired. Contact administrator"
+      );
+    }
+
+    return contract.address;
   }
 }

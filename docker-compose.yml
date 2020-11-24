@@ -1,0 +1,15 @@
+version: "2"
+services:
+  dhx-deployer:
+    image: dhx-deployer:1.0
+    env_file:
+      - .env
+    ports:
+      - "8000:8080"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"

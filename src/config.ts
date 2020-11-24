@@ -8,3 +8,6 @@ export const ethereumAccountPrivateKey =
   process.env.ETHEREUM_ACCOUNT_PRIVATE_KEY;
 export const chainType = process.env.CHAIN_TYPE;
 export const gasLimit = Number.parseInt(process.env.GAS_LIMIT);
+
+export const mongoUrl = process.env.MONGO_URL;
+export const mongoDbName = process.env.MONGO_DB_NAME;

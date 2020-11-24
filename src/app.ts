@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { ValidateError } from "tsoa";
 import { RegisterRoutes } from "../build/routes";
 import * as swaggerUi from "swagger-ui-express";
+import { ApiError } from "./apiError";
 const swaggerDocument = require("../swagger.json");
 
 class App {
@@ -47,7 +48,15 @@ class App {
           details: err?.fields,
         });
       }
+      if (err instanceof ApiError) {
+        console.log(`Api error ${req.path}: ${err}`);
+        return res.status(err.statusCode).json({
+          message: err.message,
+        });
+      }
+
       if (err instanceof Error) {
+        console.log(`Internal error ${req.path}: ${err}`);
         return res.status(500).json({
           message: "Internal Server Error",
         });
