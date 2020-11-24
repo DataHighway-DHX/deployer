@@ -1,3 +1,3 @@
-interface LockdropContract {
+export interface LockdropContract {
   address: string;
 }

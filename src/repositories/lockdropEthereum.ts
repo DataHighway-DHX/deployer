@@ -5,9 +5,9 @@ import Common from "@ethereumjs/common";
 import * as config from "../config";
 
 export class LockdropEthRepo {
-  web3: Web3;
-  abi: any;
-  code: string;
+  private web3: Web3;
+  private abi: any;
+  private code: string;
 
   constructor() {
     this.web3 = new Web3(Web3.givenProvider || config.infuraUrl);
@@ -66,14 +66,9 @@ export class LockdropEthRepo {
     let signed = tx.sign(key);
     let stx = signed.serialize();
     console.log("sending tx");
-    try {
-      let res = await this.web3.eth.sendSignedTransaction(
-        "0x" + stx.toString("hex")
-      );
-      console.log(res);
-      return res.contractAddress!;
-    } catch (e) {
-      console.log(e);
-    }
+    let res = await this.web3.eth.sendSignedTransaction(
+      "0x" + stx.toString("hex")
+    );
+    return res.contractAddress!;
   }
 }

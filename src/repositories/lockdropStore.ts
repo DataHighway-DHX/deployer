@@ -1,5 +1,6 @@
 import { Collection } from "mongodb";
 import { mongoCollection } from "./mongo";
+import { LockdropContract } from "../interfaces/contract";
 
 const collectionName = "contracts";
 export class LockdropStoreRepo {

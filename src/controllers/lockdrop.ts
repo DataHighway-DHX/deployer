@@ -24,7 +24,7 @@ export class LockdropController extends Controller {
 
     let endTime = await this.lockdropEthRepo.getEndTime(contract.address);
     if (endTime < Date.now() / 1000) {
-      return new ApiError(
+      throw new ApiError(
         "ContractExpired",
         500,
         "Contract expired. Contact administrator"
