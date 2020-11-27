@@ -9,7 +9,7 @@ Here
 ```
 
 ## Getting Started
-#### Compile contract (using Remix):
+#### Compile contract (optional) (using Remix):
 1. Go to Remix https://remix.ethereum.org
 2. Open the ./contracts folder (of https://github.com/DataHighway-DHX/mining) in Remix
 3. Change imports so they compile in the browser (e.g. change import "./interface/ERC20.sol"; to import "./ERC20.sol";)
@@ -23,7 +23,7 @@ Here
 
 #### Configure deployer parameters
 1. Copy `.env.example` to `.env`
-2. Ensure that `CONTRACT_ABI_SOURCE` and `CONTRACT_CODE_SOURCE` are paths to files from "Contract compilation" section
+2. Ensure that `CONTRACT_ABI_SOURCE` and `CONTRACT_CODE_SOURCE` are paths to files from "Contract compilation" section (optional)
 3. Replace `0xSAMPLE_ADDRESS` with account address from "Setup Ethereum account section", replace `SAMPLE_PRIVATE_KEY` with private key
 4. Register your [Infura account](https://infura.io/), create a project. Replace `wss://goerli.infura.io/ws/v3/INFURA_SAMPLE_WSS` with WSS endpoint taken from Infura.
 5. Make sure `CHAIN_TYPE` equals to first section of domain from the previous step (e.g. goerli, mainnet, ropsten).
