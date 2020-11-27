@@ -34,3 +34,11 @@ $ yarn install
 $ yarn run build
 $ yarn run serve
 ```
+
+#### Run in docker, using docker-compose
+1. Install docker and docker-compose
+2. Configure deployer parameters as in above steps
+3. Start the containers, the image will be build if it does not exists yet locally
+```
+$ docker-compose up -d
+```
