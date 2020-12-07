@@ -11,17 +11,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout source code
     - uses: actions/checkout@v2
+    - name: Set node version
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '12'
         check-latest: true
-    - run: |
+    - name: Set variables
+      run: |
         cp .env.example .env
         sed -i "s/0xSAMPLE_ADDRESS/${{ secrets.ETHEREUM_ACCOUNT_ADDRESS }}/" .env
         sed -i "s/SAMPLE_PRIVATE_KEY/${{ secrets.ETHEREUM_ACCOUNT_PRIVATE_KEY }}/" .env
         sed -i "/INFURA_URL/c\INFURA_URL=${{ secrets.INFURA_URL }}" .env
         sed -i "/CHAIN_TYPE/c\CHAIN_TYPE=${{ secrets.CHAIN_TYPE }}" .env
         mkdir ./build
-        yarn install
-        yarn run build
+    - name: Install dependencies
+    - run: yarn install
+    - name: Build binary
+    - run: yarn run build
