@@ -18,9 +18,6 @@ async function main() {
   console.log(
     "CONTRACT_EXPIRED_OFFSET_SECONDS: " + config.contractExpiredOffsetSeconds
   );
-  console.log(
-    "CONTRACT_EXPIRED_OFFSET_SECONDS: " + config.contractExpiredOffsetSeconds
-  );
 
   await mongoConnect();
   console.log("Mongo connected successfully");

@@ -1,3 +1,5 @@
+![Build Status](https://github.com/DataHighway-DHX/deployer/workflows/CI/badge.svg)
+
 ## DHX lockdrop contract deployer
 
 ```
