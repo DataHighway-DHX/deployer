@@ -45,9 +45,14 @@ $ yarn run serve
 #### Run in docker, using docker-compose
 
 1. Install docker and docker-compose
-2. Configure deployer parameters as in above steps
-3. Start the containers, the image will be build if it does not exists yet locally
+2. Configure deployer parameters as in above steps for .env file
+3. Start the containers
 
 ```
+$ docker-compose up -d
+```
+4. To rebuild the local image to include code changes run
+```
+$ docker-compose build
 $ docker-compose up -d
 ```
