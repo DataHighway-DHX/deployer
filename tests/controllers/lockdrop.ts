@@ -6,23 +6,26 @@ import chai = require("chai");
 
 chai.use(chaiAsPromised);
 
-describe("Lockdrop controller tests", () => {
-  it("/get: when contract not deployed return 404", async () => {
+function lockdropGuardTest(
+  methodName: string,
+  fun: (c: LockdropController) => Promise<any>
+) {
+  it(`/${methodName}: when contract not deployed return 404`, async () => {
     const controller = new LockdropController();
 
     // @ts-ignore
-    controller.lockdropRepo = {
-      async get(): Promise<null> {
+    controller.lockdropService.lockdropStoreRepo = {
+      async getContract(): Promise<null> {
         return null;
       },
     };
 
-    await expect(controller.get())
+    await expect(fun(controller))
       .to.eventually.be.rejected.with.property("statusCode")
       .that.equals(404);
   });
 
-  it("/get: when contract expired return 500", async () => {
+  it(`/${methodName}: when contract expired return 500`, async () => {
     const controller = new LockdropController();
 
     // @ts-ignore
@@ -41,18 +44,22 @@ describe("Lockdrop controller tests", () => {
       },
     };
 
-    await expect(controller.get())
+    await expect(fun(controller))
       .to.eventually.be.rejected.with.property("statusCode")
       .that.equals(500);
   });
+}
+
+describe("Lockdrop controller tests", () => {
+  lockdropGuardTest("get", (c) => c.get());
 
   it("/get: when contract ok return address and 200", async () => {
     const controller = new LockdropController();
     const testAddress = "someAddr";
 
     // @ts-ignore
-    controller.lockdropRepo = {
-      async get(): Promise<LockdropContract> {
+    controller.lockdropService.lockdropStoreRepo = {
+      async getContract(): Promise<LockdropContract> {
         return {
           address: testAddress,
         };
@@ -60,12 +67,17 @@ describe("Lockdrop controller tests", () => {
     };
 
     // @ts-ignore
-    controller.lockdropEthRepo = {
+    controller.lockdropService.lockdropContractRepo = {
       async getEndTime(address: string): Promise<number> {
         return Date.now() / 1000 + 10000;
       },
     };
 
-    await expect(controller.get()).to.eventually.equal(testAddress);
+    await expect(controller.get())
+      .to.eventually.has.property("lockdropAddress")
+      .which.equals(testAddress);
   });
+
+  lockdropGuardTest("signal", (c) => c.signal(null));
+  lockdropGuardTest("lock", (c) => c.lock(null));
 });

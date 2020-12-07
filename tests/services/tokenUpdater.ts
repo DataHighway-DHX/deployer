@@ -28,10 +28,10 @@ describe("Token updater service tests", () => {
 
     // @ts-ignore
     service.lockdropRepo = {
-      async get(): Promise<null> {
+      async getContract(): Promise<null> {
         return null;
       },
-      async put(contract: LockdropContract): Promise<void> {
+      async putContract(contract: LockdropContract): Promise<void> {
         expect(contract.address).eq(deployAddress);
         done();
       },
@@ -54,10 +54,10 @@ describe("Token updater service tests", () => {
 
     // @ts-ignore
     service.lockdropRepo = {
-      async get(): Promise<LockdropContract> {
+      async getContract(): Promise<LockdropContract> {
         return { address: oldAddress };
       },
-      async put(contract: LockdropContract): Promise<void> {
+      async putContract(contract: LockdropContract): Promise<void> {
         expect(contract.address).eq(deployAddress);
         done();
       },
@@ -86,10 +86,10 @@ describe("Token updater service tests", () => {
 
     // @ts-ignore
     service.lockdropRepo = {
-      async get(): Promise<LockdropContract> {
+      async getContract(): Promise<LockdropContract> {
         return { address: oldAddress };
       },
-      async put(contract: LockdropContract): Promise<void> {
+      async putContract(contract: LockdropContract): Promise<void> {
         expect(contract.address).eq(deployAddress);
         done();
       },
@@ -116,10 +116,10 @@ describe("Token updater service tests", () => {
 
     // @ts-ignore
     service.lockdropRepo = {
-      async get(): Promise<LockdropContract> {
+      async getContract(): Promise<LockdropContract> {
         return { address: oldAddress };
       },
-      async put(contract: LockdropContract): Promise<void> {
+      async putContract(contract: LockdropContract): Promise<void> {
         expect.fail("put fun should not be called");
       },
     };

@@ -1,9 +1,9 @@
 [
-    {
-        "ip": "3.126.57.130",
-        "hostname": "deployer.datahighway.com",
-        "scheme": "https",
-        "city": "Frankfurt",
-        "ethereum_address": "0xA077926C7DE7Dc4E34340E5AbeeDABCB2e08141b"
-    }
+  {
+    "ip": "3.126.57.130",
+    "hostname": "deployer.datahighway.com",
+    "scheme": "https",
+    "city": "Frankfurt",
+    "ethereum_address": "0xA077926C7DE7Dc4E34340E5AbeeDABCB2e08141b"
+  }
 ]

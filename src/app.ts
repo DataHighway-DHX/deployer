@@ -52,6 +52,7 @@ class App {
         console.log(`Api error ${req.path}: ${err}`);
         return res.status(err.statusCode).json({
           message: err.message,
+          errorCode: err.name,
         });
       }
 

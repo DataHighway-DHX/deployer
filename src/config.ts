@@ -1,8 +1,15 @@
 import "dotenv/config";
 
 export const infuraUrl = process.env.INFURA_URL;
-export const contractAbiSource = process.env.CONTRACT_ABI_SOURCE;
-export const contractCodeSource = process.env.CONTRACT_CODE_SOURCE;
+
+export const contractLockdropAbiSource =
+  process.env.CONTRACT_LOCKDROP_ABI_SOURCE;
+export const contractLockdropCodeSource =
+  process.env.CONTRACT_LOCKDROP_CODE_SOURCE;
+
+export const contractLockAbiSource = process.env.CONTRACT_LOCK_ABI_SOURCE;
+export const contractLockCodeSource = process.env.CONTRACT_LOCK_CODE_SOURCE;
+
 export const ethereumAccountAddress = process.env.ETHEREUM_ACCOUNT_ADDRESS;
 export const ethereumAccountPrivateKey =
   process.env.ETHEREUM_ACCOUNT_PRIVATE_KEY;
@@ -18,3 +25,9 @@ export const contractCheckPeriodSeconds = Number.parseInt(
 export const contractExpiredOffsetSeconds = Number.parseInt(
   process.env.CONTRACT_EXPIRED_OFFSET_SECONDS
 );
+
+export const mxcToken = process.env.MXC_TOKEN;
+export const iotaToken = process.env.IOTA_TOKEN;
+
+export const gasFeeWei = process.env.GAS_FEE_WEI;
+export const ercSendMethodId = "0xa9059cbb";

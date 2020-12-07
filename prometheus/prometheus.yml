@@ -1,10 +1,9 @@
 global:
-  scrape_interval:     15s
+  scrape_interval: 15s
   external_labels:
-      host: 'deployer.datahighway.com'
+    host: "deployer.datahighway.com"
 
 scrape_configs:
-  - job_name: 'dhx-deployer'
+  - job_name: "dhx-deployer"
     static_configs:
-      - targets: ['nodeexporter:9100','cadvisor:8080']
-
+      - targets: ["nodeexporter:9100", "cadvisor:8080"]

@@ -1,10 +1,10 @@
-import { LockdropEthRepo } from "../repositories/lockdropEthereum";
+import { LockdropContractRepo } from "../repositories/lockdropContract";
 import { LockdropStoreRepo } from "../repositories/lockdropStore";
 import { contractExpiredOffsetSeconds } from "../config";
 
 export class TokenUpdater {
   private lockdropRepo: LockdropStoreRepo = new LockdropStoreRepo();
-  private lockdropEthRepo: LockdropEthRepo = new LockdropEthRepo();
+  private lockdropEthRepo: LockdropContractRepo = new LockdropContractRepo();
   private expiredOffsetSec: number;
 
   constructor(expiredOffsetSec: number) {
@@ -26,7 +26,7 @@ export class TokenUpdater {
   }
 
   public async updateIfRequired() {
-    let contract = await this.lockdropRepo.get();
+    let contract = await this.lockdropRepo.getContract();
     let deployContract = false;
     if (!contract) {
       deployContract = true;
@@ -44,6 +44,6 @@ export class TokenUpdater {
     contract = {
       address: address,
     };
-    await this.lockdropRepo.put(contract);
+    await this.lockdropRepo.putContract(contract);
   }
 }
