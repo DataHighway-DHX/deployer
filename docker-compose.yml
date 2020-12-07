@@ -1,7 +1,8 @@
 version: "2"
 services:
   dhx-deployer:
-    image: dhx-deployer:1.0
+    image: dhxdocker/deployer:latest
+    container_name: dhx-deployer
     env_file:
       - .env
     ports:
@@ -12,6 +13,9 @@ services:
 
   mongodb:
     image: mongo
+    container_name: mongo
+    volumes: 
+      - mongoData:/data/db
     ports:
       - "27017:27017"
     restart: unless-stopped
@@ -59,4 +63,5 @@ services:
     restart: unless-stopped
 
 volumes:
+  mongoData:
   prometheus_data:
