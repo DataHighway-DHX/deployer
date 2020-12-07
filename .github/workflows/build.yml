@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
+    - name: Set node version
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: '12'
+        check-latest: true
+    - name: Install dependencies
+      run: |
+        mkdir ./build
+        yarn install
+    - name: Build binary
+      run: yarn run build
