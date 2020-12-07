@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query, Route } from "tsoa";
 import * as config from "../config";
-import { LockdropService } from "../services/lockdrop";
+import { LockdropService, Token } from "../services/lockdrop";
 
 @Route("lockdrop")
 export class LockdropController extends Controller {
@@ -32,7 +32,7 @@ export class LockdropController extends Controller {
       useValidator: boolean;
       term: number;
       dhxPublicKey: string;
-      token: "mxc" | "iota";
+      token: Token;
     }
   ) {
     return await this.lockdropService.lock(
@@ -55,7 +55,7 @@ export class LockdropController extends Controller {
       amount: string | number;
       term: number;
       dhxPublicKey: string;
-      token: "mxc" | "iota";
+      token: Token;
     }
   ) {
     return await this.lockdropService.signal(
@@ -75,11 +75,25 @@ export class LockdropController extends Controller {
   }
 
   /**
-   * Claim lock or signal and return hash for claim tx
+   * Claim lock and return hash for claim tx
    */
-  @Get("claim")
-  public async claim(@Query() transactionHash: string) {
+  @Get("claimLock")
+  public async claimLock(@Query() transactionHash: string) {
     return await this.lockdropService.claimLockByTransaction(transactionHash);
+  }
+
+  /**
+   * Claim signal and return hash for claim tx
+   */
+  @Get("claimSignal")
+  public async claimSignal(
+    @Query() transactionHash: string,
+    @Query() token: Token
+  ) {
+    return await this.lockdropService.claimSignalByTransaction(
+      transactionHash,
+      token
+    );
   }
 
   /**

@@ -65,6 +65,27 @@ export interface LockWalletStruct {
   dataHighwayPublicKey: string;
   createdAt: Date;
 }
+export interface SignalWalletStruct {
+  totalAmount: string;
+  term: number;
+  pendingAmount: string;
+  approveAmount: string;
+  claimStatus: "pending" | "finalized";
+  dataHighwayPublicKey: string;
+  createdAt: Date;
+}
+
+export type Erc20TxSendWrapper =
+  | "transaction-not-found"
+  | "transaction-pending"
+  | "transaction-failed"
+  | "invalid-method"
+  | Erc20Transaction;
+
+export type TxSendWrapper =
+  | "transaction-not-found"
+  | "transaction-pending"
+  | { tx: Tx; failed: boolean };
 
 export class LockdropContractRepo {
   private web3: Web3;
@@ -268,7 +289,7 @@ export class LockdropContractRepo {
     return source.replace(/^0+|/g, "");
   }
 
-  public async getERC20SendTx(hash: string) {
+  public async getERC20SendTx(hash: string): Promise<Erc20TxSendWrapper> {
     const tx = await this.web3.eth.getTransaction(hash).catch((_) => null);
     if (tx === null) return "transaction-not-found";
     const receipt = await this.web3.eth.getTransactionReceipt(hash);
@@ -281,6 +302,14 @@ export class LockdropContractRepo {
     const amount = this.web3.utils.hexToNumberString(amountHex);
     const tokenAddress = tx.to;
     return <Erc20Transaction>{ tx, amount, recipient, tokenAddress };
+  }
+
+  public async getTx(hash: string): Promise<TxSendWrapper> {
+    const tx = await this.web3.eth.getTransaction(hash).catch((_) => null);
+    if (tx === null) return "transaction-not-found";
+    const receipt = await this.web3.eth.getTransactionReceipt(hash);
+    if (receipt === null) return "transaction-pending";
+    return { tx, failed: receipt.status };
   }
 
   public async getUserLock(
@@ -311,6 +340,37 @@ export class LockdropContractRepo {
       term: Number.parseInt(res.term),
       useValidator: res.isValidator as boolean,
       lockAddress: res.lockAddr as string,
+      dataHighwayPublicKey: res.dataHighwayPublicKey as string,
+      createdAt: new Date(Number.parseInt(res.createdAt) * 1000),
+    };
+  }
+
+  public async getUserSignal(
+    lockdropAddress: string,
+    ethereumAddress: string,
+    tokenAddress: string
+  ) {
+    let abi = this.getAbi();
+    let res = await new this.web3.eth.Contract(abi, lockdropAddress).methods
+      .signalWalletStructs(ethereumAddress, tokenAddress)
+      .call();
+    let claimStatus: "pending" | "finalized";
+    switch (res.claimStatus) {
+      case "0":
+        claimStatus = "pending";
+        break;
+      case "1":
+        claimStatus = "finalized";
+        break;
+      default:
+        throw Error("Unknown claimStatus " + res.claimStatus);
+    }
+    return <SignalWalletStruct>{
+      pendingAmount: res.pendingTokenERC20Amount as string,
+      approveAmount: res.approvedTokenERC20Amount as string,
+      totalAmount: res.tokenERC20Amount as string,
+      claimStatus: claimStatus,
+      term: Number.parseInt(res.term),
       dataHighwayPublicKey: res.dataHighwayPublicKey as string,
       createdAt: new Date(Number.parseInt(res.createdAt) * 1000),
     };

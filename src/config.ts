@@ -10,6 +10,9 @@ export const contractLockdropCodeSource =
 export const contractLockAbiSource = process.env.CONTRACT_LOCK_ABI_SOURCE;
 export const contractLockCodeSource = process.env.CONTRACT_LOCK_CODE_SOURCE;
 
+export const contractErc20AbiSource = process.env.CONTRACT_ERC20_ABI_SOURCE;
+export const contractErc20CodeSource = process.env.CONTRACT_ERC20_CODE_SOURCE;
+
 export const ethereumAccountAddress = process.env.ETHEREUM_ACCOUNT_ADDRESS;
 export const ethereumAccountPrivateKey =
   process.env.ETHEREUM_ACCOUNT_PRIVATE_KEY;
