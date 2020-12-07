@@ -22,5 +22,6 @@ jobs:
         sed -i "s/SAMPLE_PRIVATE_KEY/${{ secrets.ETHEREUM_ACCOUNT_PRIVATE_KEY }}/" .env
         sed -i "/INFURA_URL/c\INFURA_URL=${{ secrets.INFURA_URL }}" .env
         sed -i "/CHAIN_TYPE/c\CHAIN_TYPE=${{ secrets.CHAIN_TYPE }}" .env
+        mkdir ./build
         yarn install
         yarn run build
