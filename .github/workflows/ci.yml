@@ -19,6 +19,8 @@ jobs:
         node-version: '12'
         check-latest: true
     - name: Install dependencies
-      run: yarn install
+      run: |
+        mkdir ./build
+        yarn install
     - name: Build binary
       run: yarn run build
