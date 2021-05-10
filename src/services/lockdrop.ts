@@ -63,7 +63,8 @@ export class LockdropService {
     useValidator: boolean,
     term: number,
     dhxPublicKey: string,
-    token: Token
+    token: Token,
+    returnAddress?: string,
   ) {
     let contract = await this.lockdropStoreRepo.getContract();
     await this.contractGuard(contract);
@@ -78,7 +79,8 @@ export class LockdropService {
         useValidator,
         term,
         dhxPublicKey,
-        tokenAddress
+        tokenAddress,
+        returnAddress,
       );
       const res = await event.waitHash();
       return {
@@ -96,7 +98,8 @@ export class LockdropService {
     amount: string,
     term: number,
     dhxPublicKey: string,
-    token: Token
+    token: Token,
+    returnAddress?: string,
   ) {
     let contract = await this.lockdropStoreRepo.getContract();
     await this.contractGuard(contract);
@@ -109,7 +112,8 @@ export class LockdropService {
         amount,
         term,
         dhxPublicKey,
-        tokenAddress
+        tokenAddress,
+        returnAddress,
       );
       const res = await event.waitHash();
       return {

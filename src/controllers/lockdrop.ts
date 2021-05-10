@@ -33,6 +33,7 @@ export class LockdropController extends Controller {
       term: number;
       dhxPublicKey: string;
       token: Token;
+      returnAddress?: string;
     }
   ) {
     return await this.lockdropService.lock(
@@ -41,7 +42,8 @@ export class LockdropController extends Controller {
       params.useValidator,
       params.term,
       params.dhxPublicKey,
-      params.token
+      params.token,
+      params.returnAddress,
     );
   }
 
@@ -56,13 +58,15 @@ export class LockdropController extends Controller {
       term: number;
       dhxPublicKey: string;
       token: Token;
+      returnAddress?: string;
     }
   ) {
     return await this.lockdropService.signal(
       params.amount.toString(),
       params.term,
       params.dhxPublicKey,
-      params.token
+      params.token,
+      params.returnAddress,
     );
   }
 

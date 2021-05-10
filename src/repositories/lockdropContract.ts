@@ -61,6 +61,7 @@ export interface LockWalletStruct {
   term: number;
   pendingAmount: string;
   approveAmount: string;
+  returnAddress: string;
   claimStatus: "pending" | "finalized";
   dataHighwayPublicKey: string;
   createdAt: Date;
@@ -70,6 +71,7 @@ export interface SignalWalletStruct {
   term: number;
   pendingAmount: string;
   approveAmount: string;
+  returnAddress: string;
   claimStatus: "pending" | "finalized";
   dataHighwayPublicKey: string;
   createdAt: Date;
@@ -192,7 +194,8 @@ export class LockdropContractRepo {
     useValidator: boolean,
     term: number,
     dhxPublicKey: string,
-    tokenAddress: string
+    tokenAddress: string,
+    returnAddress?: string,
   ) {
     let abi = this.getAbi();
 
@@ -202,7 +205,8 @@ export class LockdropContractRepo {
       amount,
       this.formatDhxPublicKey(dhxPublicKey),
       tokenAddress,
-      useValidator
+      returnAddress,
+      useValidator,
     );
 
     return await this.sendTransactionSigned(txx, lockdropAddress, (e) => {
@@ -245,7 +249,8 @@ export class LockdropContractRepo {
     amount: string,
     term: number,
     dhxPublicKey: string,
-    tokenAddress: string
+    tokenAddress: string,
+    returnAddress?: string,
   ) {
     let abi = this.getAbi();
 
@@ -253,7 +258,8 @@ export class LockdropContractRepo {
       term,
       amount,
       this.formatDhxPublicKey(dhxPublicKey),
-      tokenAddress
+      tokenAddress,
+      returnAddress
     );
 
     return await this.sendTransactionSigned(txx, lockdropAddress, (e) => {
@@ -340,6 +346,7 @@ export class LockdropContractRepo {
       term: Number.parseInt(res.term),
       useValidator: res.isValidator as boolean,
       lockAddress: res.lockAddr as string,
+      returnAddress: res.returnAddr as string,
       dataHighwayPublicKey: res.dataHighwayPublicKey as string,
       createdAt: new Date(Number.parseInt(res.createdAt) * 1000),
     };
@@ -371,6 +378,7 @@ export class LockdropContractRepo {
       totalAmount: res.tokenERC20Amount as string,
       claimStatus: claimStatus,
       term: Number.parseInt(res.term),
+      returnAddress: res.returnAddr as string,
       dataHighwayPublicKey: res.dataHighwayPublicKey as string,
       createdAt: new Date(Number.parseInt(res.createdAt) * 1000),
     };
