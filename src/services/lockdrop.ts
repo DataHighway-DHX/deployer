@@ -13,6 +13,7 @@ import * as config from "../config";
 import { LockContractRepo } from "../repositories/lockContract";
 import { Transaction } from "web3-core";
 import { Erc20ContractRepo } from "../repositories/erc20Contract";
+import { Claim } from "../interfaces/claim";
 
 export type Token = "mxc" | "iota";
 

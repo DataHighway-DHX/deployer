@@ -29,8 +29,8 @@ function lockdropGuardTest(
     const controller = new LockdropController();
 
     // @ts-ignore
-    controller.lockdropRepo = {
-      async get(): Promise<LockdropContract> {
+    controller.lockdropService.lockdropStoreRepo = {
+      async getContract(): Promise<LockdropContract> {
         return {
           address: "someAddr",
         };
@@ -38,7 +38,7 @@ function lockdropGuardTest(
     };
 
     // @ts-ignore
-    controller.lockdropEthRepo = {
+    controller.lockdropService.lockdropContractRepo = {
       async getEndTime(address: string): Promise<number> {
         return 1;
       },
@@ -78,6 +78,6 @@ describe("Lockdrop controller tests", () => {
       .which.equals(testAddress);
   });
 
-  lockdropGuardTest("signal", (c) => c.signal(null));
-  lockdropGuardTest("lock", (c) => c.lock(null));
+  lockdropGuardTest("signal", (c) => c.signal({amount: 123} as any));
+  lockdropGuardTest("lock", (c) => c.lock({amount: 123} as any));
 });

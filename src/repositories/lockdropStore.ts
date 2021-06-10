@@ -1,5 +1,6 @@
 import { mongoCollection } from "./mongo";
 import { LockdropContract } from "../interfaces/contract";
+import { Claim } from "../interfaces/claim";
 
 const contractsCollectionName = "contracts";
 const claimsCollectionName = "claims";

@@ -1,4 +1,4 @@
-interface Claim {
+export interface Claim {
   type: "lock" | "signal";
   tokenAddress: string;
   tokenName: string;
