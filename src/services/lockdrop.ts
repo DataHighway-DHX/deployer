@@ -13,6 +13,7 @@ import * as config from "../config";
 import { LockContractRepo } from "../repositories/lockContract";
 import { Transaction } from "web3-core";
 import { Erc20ContractRepo } from "../repositories/erc20Contract";
+import { Claim } from "../interfaces/claim";
 
 export type Token = "mxc" | "iota";
 
@@ -63,7 +64,8 @@ export class LockdropService {
     useValidator: boolean,
     term: number,
     dhxPublicKey: string,
-    token: Token
+    token: Token,
+    returnAddress?: string,
   ) {
     let contract = await this.lockdropStoreRepo.getContract();
     await this.contractGuard(contract);
@@ -78,7 +80,8 @@ export class LockdropService {
         useValidator,
         term,
         dhxPublicKey,
-        tokenAddress
+        tokenAddress,
+        returnAddress,
       );
       const res = await event.waitHash();
       return {
@@ -96,7 +99,8 @@ export class LockdropService {
     amount: string,
     term: number,
     dhxPublicKey: string,
-    token: Token
+    token: Token,
+    returnAddress?: string,
   ) {
     let contract = await this.lockdropStoreRepo.getContract();
     await this.contractGuard(contract);
@@ -109,7 +113,8 @@ export class LockdropService {
         amount,
         term,
         dhxPublicKey,
-        tokenAddress
+        tokenAddress,
+        returnAddress,
       );
       const res = await event.waitHash();
       return {
